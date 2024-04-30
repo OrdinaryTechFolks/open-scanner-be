@@ -1,0 +1,6 @@
+base_url: http://localhost:8080
+app: 
+  http:
+    address: :8080
+  grpc:
+    address: :8081
