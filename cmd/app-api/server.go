@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/transport/grpc"
-	v1 "github.com/huseinnashr/open-scanner-be/api/v1"
+	v1 "github.com/huseinnashr/open-scanner-be/api/open-scanner-be/v1"
 	"github.com/huseinnashr/open-scanner-be/cmd/app-api/middleware"
 	"github.com/huseinnashr/open-scanner-be/internal/config"
 	"golang.org/x/sync/errgroup"

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.7.1
 // - protoc             (unknown)
-// source: v1/opencv.proto
+// source: open-scanner-be/v1/opencv.proto
 
 package v1
 

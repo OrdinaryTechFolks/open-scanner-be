@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: v1/opencv.proto
+// source: open-scanner-be/v1/opencv.proto
 
 package v1
 
@@ -105,5 +105,5 @@ var OpenCVService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "v1/opencv.proto",
+	Metadata: "open-scanner-be/v1/opencv.proto",
 }

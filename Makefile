@@ -8,7 +8,7 @@ setup:
 
 .PHONY: api
 api:
-	buf generate ${EXCLUDE_THIRD_PARTY} --path api/v1
+	buf generate ${EXCLUDE_THIRD_PARTY} --path api/open-scanner-be/v1
 
 build:
 	go build -ldflags "-X main.Version=${VERSION}" -v -o bin/app-api cmd/app-api/*.go

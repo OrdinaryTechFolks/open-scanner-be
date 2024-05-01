@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	v1 "github.com/huseinnashr/open-scanner-be/api/v1"
+	v1 "github.com/huseinnashr/open-scanner-be/api/open-scanner-be/v1"
 	"github.com/huseinnashr/open-scanner-be/internal/domain"
 	"github.com/huseinnashr/open-scanner-be/internal/pkg/tracer"
 )
