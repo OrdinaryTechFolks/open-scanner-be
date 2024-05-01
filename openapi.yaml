@@ -1,0 +1,74 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: OpenCVService API
+    version: 0.0.1
+paths:
+    /opencv:WarpPerspective:
+        post:
+            tags:
+                - OpenCVService
+            operationId: OpenCVService_WarpPerspective
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/v1.WarpPerspectiveRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/v1.Image'
+components:
+    schemas:
+        v1.Image:
+            type: object
+            properties:
+                width:
+                    type: integer
+                    format: int32
+                height:
+                    type: integer
+                    format: int32
+                channels:
+                    type: integer
+                    format: int32
+                data:
+                    type: string
+                    format: bytes
+        v1.Point2f:
+            type: object
+            properties:
+                x:
+                    type: number
+                    format: float
+                y:
+                    type: number
+                    format: float
+        v1.Size2f:
+            type: object
+            properties:
+                width:
+                    type: number
+                    format: float
+                height:
+                    type: number
+                    format: float
+        v1.WarpPerspectiveRequest:
+            type: object
+            properties:
+                srcImage:
+                    $ref: '#/components/schemas/v1.Image'
+                srcCorners:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/v1.Point2f'
+                destSize:
+                    $ref: '#/components/schemas/v1.Size2f'
+tags:
+    - name: OpenCVService
