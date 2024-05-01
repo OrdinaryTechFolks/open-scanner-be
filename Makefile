@@ -16,6 +16,9 @@ build:
 start-local:
 	make api
 	reflex -r "\.(go|yaml)" -s -- sh -c "make build && ./bin/app-api -config=./files/config/local.yaml"
+	
+start-grpc-web:
+	grpcwebproxy --backend_addr=localhost:8081 --run_tls_server=false --allow_all_origins
 
 start-prod:
 	./bin/app-api -config=./files/config/prod.yaml
