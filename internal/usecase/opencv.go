@@ -27,7 +27,7 @@ func (u *OpenCVUsecase) WarpPerspective(ctx context.Context, param *v1.WarpPersp
 	destMat := gocv.NewMat()
 
 	destCorners := []gocv.Point2f{{X: 0, Y: 0}, {X: destSize.GetWidth(), Y: 0},
-		{X: destSize.Width, Y: destSize.Height}, {X: 0, Y: destSize.Width}}
+		{X: destSize.GetWidth(), Y: destSize.GetHeight()}, {X: 0, Y: destSize.GetHeight()}}
 	perspectiveMat := gocv.GetPerspectiveTransform2f(
 		gocv.NewPoint2fVectorFromPoints(Point2FToGoCVs(srcCorners)),
 		gocv.NewPoint2fVectorFromPoints(destCorners),
