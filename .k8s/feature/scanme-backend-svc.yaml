@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scanme-backend-feat-#{FEATURE_ID}
+  namespace: scanme-dev
+spec:
+  selector:
+    app: scanme-backend-feat-#{FEATURE_ID}
+  ports:
+    - name: scanme-backend-http-feat-#{FEATURE_ID}
+      protocol: TCP
+      port: 80
+      targetPort: 8080

@@ -1,0 +1,44 @@
+name: "Release to Feature"
+concurrency:
+  group: feature-${{ github.head_ref }}
+  cancel-in-progress: true
+  
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  deploy:
+    runs-on: arc-runner-set
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract feature ID, check validity
+        run: |
+          FEATURE_ID=$(echo ${{ github.head_ref }} | grep -oP '(feature\/)\K(BIM)-\d+(?=-)' | tr 'A-Z' 'a-z')
+          if [[ -z $FEATURE_ID ]]; then
+            echo "::error branch must be name feature/BIM-123-lorem-ipsum" 
+            exit 1
+          fi
+          echo "FEATURE_ID=$FEATURE_ID" >> $GITHUB_ENV
+      - name: Replace env placeholders
+        env: 
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          sed -i "s/#{VERSION}/${FEATURE_ID}-${GITHUB_HEAD_SHA::7}/g" ./Makefile
+          sed -i "s/#{FEATURE_ID}/$FEATURE_ID/g" ./files/config/feature.yaml
+          sed -i "s/#{FEATURE_ID}/$FEATURE_ID/g" ./.k8s/feature/scanme-backend-depl.yaml
+          sed -i "s/#{FEATURE_ID}/$FEATURE_ID/g" ./.k8s/feature/scanme-backend-svc.yaml
+          sed -i "s/#{FEATURE_ID}/$FEATURE_ID/g" ./.k8s/feature/scanme-backend-ingress-http.yaml
+      - name: Build and push docker image
+        run: |
+          docker build -t registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature .
+          docker push registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature
+      - name: Deploy to Cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: |
+            kubectl apply -f ./.k8s/feature/scanme-backend-depl.yaml
+            kubectl apply -f ./.k8s/feature/scanme-backend-svc.yaml
+            kubectl apply -f ./.k8s/feature/scanme-backend-ingress-http.yaml
