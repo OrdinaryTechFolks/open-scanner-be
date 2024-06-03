@@ -1,8 +1,8 @@
-FROM golang:1.21-alpine
+FROM ghcr.io/hybridgroup/opencv:4.9.0
 
 RUN mkdir /app
 WORKDIR /app
 
 COPY . .
 
-RUN apk add make && make setup && make build
+RUN make setup && make build
