@@ -14,9 +14,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Extract feature ID, check validity
         run: |
-          FEATURE_ID=$(echo ${{ github.head_ref }} | grep -oP '(feature\/)\K(BIM)-\d+(?=-)' | tr 'A-Z' 'a-z')
+          FEATURE_ID=$(echo ${{ github.head_ref }} | grep -oP '\d+' | head -n 1)
           if [[ -z $FEATURE_ID ]]; then
-            echo "::error branch must be name feature/BIM-123-lorem-ipsum" 
+            echo "::error branch must be name {FEATURE_ID}-description" 
             exit 1
           fi
           echo "FEATURE_ID=$FEATURE_ID" >> $GITHUB_ENV
