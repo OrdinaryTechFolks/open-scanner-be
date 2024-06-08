@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scanme-backend-svc
+  namespace: scanme
+spec:
+  selector:
+    app: scanme-backend-pod
+  ports:
+    - name: scanme-backend-http
+      protocol: TCP
+      port: 80
+      targetPort: 8080

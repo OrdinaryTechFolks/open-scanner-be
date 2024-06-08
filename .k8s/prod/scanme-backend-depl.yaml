@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scanme-backend-depl
+  namespace: scanme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scanme-backend-pod
+  template:
+    metadata:
+      labels:
+        app: scanme-backend-pod
+    spec:
+      containers:
+        - name: scanme-backend
+          image: 0.0.0.0:30001/scanme-backend:#{RELEASE_VERSION}
+          imagePullPolicy: Always
+          command: ["/bin/sh","-c"]
+          args: ["./bin/app-api -config=./files/config/prod.yaml | make start-grpc-web"]
+          envFrom:
+            - secretRef:
+                name: scanme-backend

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scanme-backend-http
+  namespace: scanme-dev
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: scanme-backend-http-dev.ordinarytechfolks.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: scanme-backend
+                port:
+                  number: 80
+  tls:
+    - hosts: 
+      - scanme-backend-http-dev.ordinarytechfolks.com
+      secretName: otfs-tls
