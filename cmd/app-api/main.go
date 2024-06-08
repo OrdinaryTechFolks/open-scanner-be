@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Name    string = "bimble-backend-api"
+	Name    string = "scanme-backend-api"
 	Version string
 )
 

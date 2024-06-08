@@ -5,6 +5,7 @@ setup:
 	go mod vendor
 	go install github.com/cespare/reflex@latest
 	go install github.com/pressly/goose/v3/cmd/goose@latest
+	go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest
 
 .PHONY: api
 api:
@@ -14,7 +15,6 @@ build:
 	go build -ldflags "-X main.Version=${VERSION}" -v -o bin/app-api cmd/app-api/*.go
 
 start-local:
-	make api
 	reflex -r "\.(go|yaml)" -s -- sh -c "make build && ./bin/app-api -config=./files/config/local.yaml"
 	
 start-grpc-web:

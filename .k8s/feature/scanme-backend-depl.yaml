@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scanme-backend-feat-#{FEATURE_ID}
+  namespace: scanme-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scanme-backend-feat-#{FEATURE_ID}
+  template:
+    metadata:
+      labels:
+        app: scanme-backend-feat-#{FEATURE_ID}
+    spec:
+      containers:
+        - name: scanme-backend
+          image: 0.0.0.0:30001/scanme-backend:#{FEATURE_ID}-feature
+          imagePullPolicy: Always
+          command: ["/bin/sh","-c"]
+          args: ["./bin/app-api -config=./files/config/feature.yaml | make start-grpc-web"]
+          envFrom:
+            - secretRef:
+                name: scanme-backend
