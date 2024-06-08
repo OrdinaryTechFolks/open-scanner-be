@@ -32,13 +32,10 @@ jobs:
       - name: Build and push docker image
         run: |
           IMAGE=registry.registry.svc.cluster.local/scanme-backend
-          docker pull ${IMAGE}:${FEATURE_ID}-feature || docker pull ${IMAGE}:latest-dev || docker pull ${IMAGE}:latest || true
+          docker pull ${IMAGE}:${FEATURE_ID}-feature || true 
+          docker pull ${IMAGE}:latest-dev || true
           
-          docker build \
-            --cache-from ${IMAGE}:${FEATURE_ID}-feature \
-            --cache-from ${IMAGE}:latest-dev \
-            --cache-from ${IMAGE}:latest \
-            -t ${IMAGE}:${FEATURE_ID}-feature .
+          docker build -t ${IMAGE}:${FEATURE_ID}-feature .
           docker push ${IMAGE}:${FEATURE_ID}-feature
       - name: Deploy to Cluster
         uses: wahyd4/kubectl-helm-action@master
