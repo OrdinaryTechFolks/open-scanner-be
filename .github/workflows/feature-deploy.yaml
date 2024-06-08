@@ -31,10 +31,11 @@ jobs:
           sed -i "s/#{FEATURE_ID}/$FEATURE_ID/g" ./.k8s/feature/scanme-backend-ingress-http.yaml
       - name: Build and push docker image
         run: |
-          docker build -t registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature . \
-            --cache-from registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature  \
-            --cache-from registry.registry.svc.cluster.local/scanme-backend:latest-dev
-            --cache-from registry.registry.svc.cluster.local/scanme-backend:latest
+          docker build \
+            --cache-from registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature \
+            --cache-from registry.registry.svc.cluster.local/scanme-backend:latest-dev \
+            --cache-from registry.registry.svc.cluster.local/scanme-backend:latest \
+            -t registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature .
           docker push registry.registry.svc.cluster.local/scanme-backend:${FEATURE_ID}-feature
       - name: Deploy to Cluster
         uses: wahyd4/kubectl-helm-action@master
