@@ -1,1 +1,1 @@
-# open-scanner-be
+# scanme-backend
