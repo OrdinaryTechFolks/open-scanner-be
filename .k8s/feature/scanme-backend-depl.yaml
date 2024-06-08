@@ -17,7 +17,8 @@ spec:
         - name: scanme-backend
           image: 0.0.0.0:30001/scanme-backend:#{FEATURE_ID}-feature
           imagePullPolicy: Always
-          command: ['./bin/app-api', '-config=./files/config/feature.yaml', '|', 'make', 'start-grpc-web']
+          command: ["/bin/sh","-c"]
+          args: ["./bin/app-api -config=./files/config/feature.yaml | make start-grpc-web"]
           envFrom:
             - secretRef:
                 name: scanme-backend
