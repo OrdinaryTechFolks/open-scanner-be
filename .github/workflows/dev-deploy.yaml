@@ -19,8 +19,13 @@ jobs:
           sed -i "s/#{VERSION}/${GITHUB_SHA::7}/g" ./Makefile
       - name: Build and push docker image
         run: |
-          docker build -t registry.registry.svc.cluster.local/scanme-backend:${GITHUB_SHA}-dev .
-          docker push registry.registry.svc.cluster.local/scanme-backend:${GITHUB_SHA}-dev
+          IMAGE=registry.registry.svc.cluster.local/scanme-backend
+
+          docker pull ${IMAGE}:latest-dev || true
+
+          docker build -t ${IMAGE}:${GITHUB_SHA}-dev -t ${IMAGE}:latest-dev .
+          docker push ${IMAGE}:${GITHUB_SHA}-dev
+          docker push ${IMAGE}:latest-dev
       - name: Deploy to Dev Cluster
         uses: wahyd4/kubectl-helm-action@master
         env:

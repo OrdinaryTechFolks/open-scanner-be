@@ -32,7 +32,8 @@ jobs:
       - name: Build and push docker image
         run: |
           IMAGE=registry.registry.svc.cluster.local/scanme-backend
-          docker pull ${IMAGE}:${FEATURE_ID}-feature || true 
+          
+          docker pull ${IMAGE}:${FEATURE_ID}-feature || true
           docker pull ${IMAGE}:latest-dev || true
           
           docker build -t ${IMAGE}:${FEATURE_ID}-feature .
