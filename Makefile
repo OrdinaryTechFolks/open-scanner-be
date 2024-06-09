@@ -2,7 +2,6 @@ VERSION=#{VERSION}
 EXCLUDE_THIRD_PARTY=--exclude-path third_party/errors --exclude-path third_party/google --exclude-path third_party/openapi --exclude-path third_party/validate
 
 setup:
-	go mod vendor
 	go install github.com/cespare/reflex@latest
 	go install github.com/pressly/goose/v3/cmd/goose@latest
 	go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest
