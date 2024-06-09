@@ -23,9 +23,8 @@ jobs:
 
           docker pull ${IMAGE}:latest-dev || true
 
-          docker build -t ${IMAGE}:${GITHUB_SHA}-dev -t ${IMAGE}:latest-dev .
-          docker push ${IMAGE}:${GITHUB_SHA}-dev
-          docker push ${IMAGE}:latest-dev
+          docker buildx build --push -t ${IMAGE}:${GITHUB_SHA}-dev -t ${IMAGE}:latest-dev \
+            --cache-to type=inline --cache-from type=registry,ref=${IMAGE}:latest-dev .
       - name: Deploy to Dev Cluster
         uses: wahyd4/kubectl-helm-action@master
         env:

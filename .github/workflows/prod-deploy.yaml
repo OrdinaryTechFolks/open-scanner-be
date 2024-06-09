@@ -25,8 +25,8 @@ jobs:
 
           docker pull ${IMAGE}:latest-dev || true
 
-          docker build -t ${IMAGE}:$RELEASE_VERSION .
-          docker push ${IMAGE}:$RELEASE_VERSION
+          docker buildx build --push -t ${IMAGE}:$RELEASE_VERSION \
+            --cache-to type=inline --cache-from type=registry,ref=${IMAGE}:latest-dev .
       - name: Deploy to Production Cluster
         uses: wahyd4/kubectl-helm-action@master
         env:

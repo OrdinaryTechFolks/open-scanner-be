@@ -38,7 +38,8 @@ jobs:
           
           docker buildx build --push -t ${IMAGE}:${FEATURE_ID}-feature \
             --cache-to type=inline \
-            --cache-from type=registry,ref=${IMAGE}:${FEATURE_ID}-feature .
+            --cache-from type=registry,ref=${IMAGE}:${FEATURE_ID}-feature \
+            --cache-from type=registry,ref=${IMAGE}:latest-dev .
       - name: Deploy to Cluster
         uses: wahyd4/kubectl-helm-action@master
         env:
